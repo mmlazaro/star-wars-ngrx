@@ -4,10 +4,16 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MoviesListComponent } from './movies-list/movies-list.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { CharacterDetailsComponent } from './character-details/character-details.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MoviesListComponent,
+    MovieDetailsComponent,
+    CharacterDetailsComponent
   ],
   imports: [
     BrowserModule,
