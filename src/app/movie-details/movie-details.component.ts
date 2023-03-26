@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription, tap } from 'rxjs';
-import { loadMovieDetailId } from '../store/star-wars.actions';
+import { loadMovieDetailId, loadMovies } from '../store/star-wars.actions';
 import { StarWarsState } from '../store/star-wars.reducer';
 import { selectCharactersForMovie, selectLoading, selectMovie, selectMovies } from '../store/star-wars.selectors';
 

@@ -23,3 +23,8 @@ export const cachedAction = createAction('Cached action')
 export const loadCharacterDetails =  createAction('loadCharacterDetails', props<{id: string}>());
 
 export const loadMovieDetailId =  createAction('Load movie detail id', props<{id: string}>() );
+
+export const startLoading = createAction('Start loading');
+export const finishLoading = createAction('Finish loading');
+
+export const loadMultipleCharactersSuccess = createAction('loadMultipleCharactersSuccess', props<{characters: Record<string, Character>}>());

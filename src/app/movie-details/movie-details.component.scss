@@ -1,3 +1,7 @@
 a:hover {
     cursor: pointer;
 }
+:host {
+    display: flex;
+    justify-content: center;
+}

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MatListModule } from '@angular/material/list';
@@ -17,6 +17,7 @@ import * as starWarsEffects from './store/star-wars.effects';
 import * as fromStartWarsReducer from './store/star-wars.reducer';
 import { API_URL } from './services/api-url.token';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { LoadingInterceptor } from './loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   ],
   providers: [{
     provide: API_URL, useValue: 'https://swapi.dev/api/'
-  }],
+  },
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
