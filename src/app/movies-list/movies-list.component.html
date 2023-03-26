@@ -1,14 +1,25 @@
-<p>movies component</p>
-<ng-container *ngIf="(isLoading$ | async); else moviesTmpl">
-    <p>loading</p>
 
-</ng-container>
 
-<ng-template #moviesTmpl>
-    <ng-container *ngIf="movies$ | async as movies">
-        <p>movies defined</p>
-        <li *ngFor="let movie of movies; let i = index" (click)="goToMovie(movie, movie.episode_id)">
-            {{movie.title}}
-        </li>
-    </ng-container>
-</ng-template>
+<div class="movie-list-container">
+    <ng-container *ngIf="(isLoading$ | async); else moviesTmpl">
+        <mat-spinner></mat-spinner>
+     
+     </ng-container>
+     
+     <ng-template #moviesTmpl>
+         <ng-container *ngIf="movies$ | async as movies">
+            <mat-card>
+                <mat-card-content>
+                    <mat-list role="list">
+                        <ng-container *ngFor="let movie of movies">
+                            <mat-list-item  (click)="goToMovie(movie, movie.episode_id)">
+                                <a>{{movie.title}}</a> 
+                             </mat-list-item>
+                        </ng-container>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+            
+         </ng-container> 
+     </ng-template>
+</div>

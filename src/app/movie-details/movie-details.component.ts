@@ -15,6 +15,7 @@ export class MovieDetailsComponent {
 
   selectedMovie$ = this.store.select(selectMovie);
   movieCharacters$ = this.store.select(selectCharactersForMovie);
+  isLoading$ = this.store.select(selectLoading).pipe(tap(loading => console.log(loading)));
   subscription?: Subscription; 
   constructor(private store: Store<StarWarsState>, private route: ActivatedRoute, private router: Router) {}
 
