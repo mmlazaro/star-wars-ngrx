@@ -1,1 +1,7 @@
-<p>character-details works!</p>
+<div *ngIf="selectedCharacter$ | async as character">
+    <p>{{character.name}}</p>
+    <p>{{character.height}}</p>
+    <p>{{character.birth_year}}</p>
+    
+
+</div>

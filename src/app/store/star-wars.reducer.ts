@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from "@ngrx/store";
 import { Character } from "../models/character.interface";
 import { Movie } from "../models/movie.interface";
-import { cachedAction, loadCharacters, loadCharactersError, loadCharactersSuccess, loadCharacterSuccess, loadMovieDetail, loadMovies, loadMoviesError, loadMoviesSuccess } from "./star-wars.actions";
+import { cachedAction, loadCharacterDetails, loadCharacters, loadCharactersError, loadCharactersSuccess, loadCharacterSuccess, loadMovieDetail, loadMovies, loadMoviesError, loadMoviesSuccess } from "./star-wars.actions";
 
 export interface StarWarsState {
     movies: Movie[],
@@ -53,7 +53,6 @@ const starWarsReducer = createReducer(
     //     }, {} as Record<string, Character>)
     // })),
     on(loadCharacterSuccess, (state, {character, id}) => {
-        debugger
         return {
         ...state,
         isLoading: false,
@@ -70,8 +69,11 @@ const starWarsReducer = createReducer(
     on(cachedAction, (state) => ({
         ...state, 
         isLoading: false
-    }))
-
+    })),
+    on(loadCharacterDetails, (state, {id}) => ({
+        ...state, 
+        selectedCharacter: state.characters[id]
+    })),
 );
 
 export function reducer(state: StarWarsState | undefined, action: Action) {

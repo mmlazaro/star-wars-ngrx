@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Character } from '../models/character.interface';
 import { StarWarsState } from './star-wars.reducer';
 
 export const selectFeature = createFeatureSelector<StarWarsState>('starWars');
@@ -19,3 +20,23 @@ export const selectLoading = createSelector(
 export const selectCharacters = createSelector(
     selectFeature, (state) => state.characters
 );
+
+export const selectCharactersForMovie = createSelector(
+    selectFeature, (state => {
+        const selectedMovie = state.selectedMovie;
+        //const charactersIds = state.characters.map(characterUrl => characterUrl.split(`${apiUrl}people`)[1].replaceAll('/', '');)
+        return Object.entries(state.characters).reduce((acc, characterEntr) => {
+            //return selectedMovie?.characters.includes(character.url)
+            const [id, character] = characterEntr;
+            acc.push({
+                ...character, 
+                id
+            })
+            return acc;
+        }, [] as (Character & {id: string})[]);
+    })
+);
+
+export const selectCurrentCharacter = createSelector(selectFeature, (state) => {
+    return state.selectedCharacter
+});

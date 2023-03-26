@@ -1,16 +1,17 @@
 import { inject } from '@angular/core';
 import { catchError, concatMap, exhaustMap, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { StarWarsClientService } from '../services/star-wars-client.service';
 import { cachedAction, loadCharacter, loadCharacterError, loadCharacterSuccess, loadMovieDetail, loadMovies, loadMoviesError, loadMoviesSuccess } from './star-wars.actions';
-import { Store } from '@ngrx/store';
 import { StarWarsState } from './star-wars.reducer';
 import { selectCharacters, selectMovies } from './star-wars.selectors';
 import { API_URL } from '../services/api-url.token';
  
 
 export const loadStarWarsMovies = createEffect(
-  (actions$ = inject(Actions), starWarsService = inject(StarWarsClientService), store = inject(Store<StarWarsState>), apiUrl = inject(API_URL)) => {
+  (actions$ = inject(Actions), starWarsService = inject(StarWarsClientService), 
+  store = inject(Store<StarWarsState>), apiUrl = inject(API_URL)) => {
     return actions$.pipe(
       ofType(loadMovies),
       switchMap(action => 

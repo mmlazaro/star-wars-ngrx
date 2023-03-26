@@ -20,3 +20,5 @@ export const loadCharacterSuccess = createAction('Load character success', props
 export const loadCharacterError = createAction('Load character error');
 
 export const cachedAction = createAction('Cached action')
+
+export const loadCharacterDetails =  createAction('loadCharacterDetails', props<{id: string}>());
