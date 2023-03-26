@@ -23,7 +23,6 @@ export class MoviesListComponent implements OnInit {
   }
 
   goToMovie(movie: Movie, index: number) {
-    this.store.dispatch(loadMovieDetail({selectedMovie: movie}))
     this.router.navigate(['/movies', index ]);
     console.log('navigate')
   }

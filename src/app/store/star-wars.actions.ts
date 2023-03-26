@@ -14,7 +14,6 @@ export const loadCharacters = createAction('Load characters');
 export const loadCharactersSuccess = createAction('Load characters success', props<{characters: Character[]}>());
 export const loadCharactersError = createAction('Load characters error');
 
-// todo select character
 export const loadCharacter = createAction('Load character', props<{characterUrl: string}>());
 export const loadCharacterSuccess = createAction('Load character success', props<{character: Character, id: string}>());
 export const loadCharacterError = createAction('Load character error');
@@ -22,3 +21,5 @@ export const loadCharacterError = createAction('Load character error');
 export const cachedAction = createAction('Cached action')
 
 export const loadCharacterDetails =  createAction('loadCharacterDetails', props<{id: string}>());
+
+export const loadMovieDetailId =  createAction('Load movie detail id', props<{id: string}>() );

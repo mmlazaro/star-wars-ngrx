@@ -40,3 +40,8 @@ export const selectCharactersForMovie = createSelector(
 export const selectCurrentCharacter = createSelector(selectFeature, (state) => {
     return state.selectedCharacter
 });
+
+export const selectListOfMoviesForCharacter = createSelector(selectFeature, (state) => {
+    return state.movies.filter(movie => 
+        state.selectedCharacter?.films.includes(movie.url));
+});

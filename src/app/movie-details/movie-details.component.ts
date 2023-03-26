@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription, tap } from 'rxjs';
-import { Movie } from '../models/movie.interface';
-import { loadMovieDetail, loadMovies } from '../store/star-wars.actions';
+import { loadMovieDetailId } from '../store/star-wars.actions';
 import { StarWarsState } from '../store/star-wars.reducer';
 import { selectCharactersForMovie, selectLoading, selectMovie, selectMovies } from '../store/star-wars.selectors';
 
@@ -22,15 +21,11 @@ export class MovieDetailsComponent {
   ngOnInit() {
     this.subscription = this.route.params.subscribe(params => {
       const id = params['id'];
-     // this.store.dispatch(loadMovieDetail({id}));
+      this.store.dispatch(loadMovieDetailId({id}))
     })
   }
 
   goToCharacterPage(id: string) {
     this.router.navigate(['character', id])
   }
-
-
-  //this.store.dispatch(loadMovieDetail({selectedMovie: movie}))
-
 }

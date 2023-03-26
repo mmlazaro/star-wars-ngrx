@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { loadCharacterDetails } from '../store/star-wars.actions';
 import { StarWarsState } from '../store/star-wars.reducer';
-import { selectCurrentCharacter } from '../store/star-wars.selectors';
+import { selectCurrentCharacter, selectListOfMoviesForCharacter } from '../store/star-wars.selectors';
 
 @Component({
   selector: 'app-character-details',
@@ -13,7 +13,7 @@ import { selectCurrentCharacter } from '../store/star-wars.selectors';
 })
 export class CharacterDetailsComponent implements OnInit, OnDestroy {
   selectedCharacter$ = this.store.select(selectCurrentCharacter);
-  //movieCharacters$ = this.store.select(selectCharactersForMovie);
+  moviesForCharacter$ = this.store.select(selectListOfMoviesForCharacter);
   subscription?: Subscription;
   constructor(private store: Store<StarWarsState>, private route: ActivatedRoute, private router: Router) {}
 
@@ -28,7 +28,7 @@ export class CharacterDetailsComponent implements OnInit, OnDestroy {
     if (this.subscription) this.subscription.unsubscribe();
   }
 
-  goToMoviePage(id: string) {
-   // this.router.navigate(['character', id])
+  goToMoviePage(id: number) {
+    this.router.navigate(['/movies', id ]);
   }
 }

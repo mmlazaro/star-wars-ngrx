@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from "@ngrx/store";
 import { Character } from "../models/character.interface";
 import { Movie } from "../models/movie.interface";
-import { cachedAction, loadCharacterDetails, loadCharacters, loadCharactersError, loadCharactersSuccess, loadCharacterSuccess, loadMovieDetail, loadMovies, loadMoviesError, loadMoviesSuccess } from "./star-wars.actions";
+import { cachedAction, loadCharacterDetails, loadCharacters, loadCharactersError, loadCharactersSuccess, loadCharacterSuccess, loadMovieDetail, loadMovieDetailId, loadMovies, loadMoviesError, loadMoviesSuccess } from "./star-wars.actions";
 
 export interface StarWarsState {
     movies: Movie[],
@@ -44,14 +44,7 @@ const starWarsReducer = createReducer(
         selectedMovie
     })),
     on(loadCharacters, (state) => ({...state, isLoading: true, isError: false})),
-    // on(loadCharactersSuccess, (state, { characters}) => ({
-    //     ...state,
-    //     isLoading: false,
-    //     characters: characters.reduce((acc, curr) => {
-    //         acc[curr.name] = curr;
-    //         return acc;
-    //     }, {} as Record<string, Character>)
-    // })),
+
     on(loadCharacterSuccess, (state, {character, id}) => {
         return {
         ...state,
@@ -74,6 +67,12 @@ const starWarsReducer = createReducer(
         ...state, 
         selectedCharacter: state.characters[id]
     })),
+    on(loadMovieDetailId, (state, {id}) => {
+        return {
+            ...state,
+            selectedMovie: state.movies.find(movie => movie.episode_id == +id)
+        }
+    })
 );
 
 export function reducer(state: StarWarsState | undefined, action: Action) {

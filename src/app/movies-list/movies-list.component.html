@@ -1,16 +1,13 @@
 <p>movies component</p>
 <ng-container *ngIf="(isLoading$ | async); else moviesTmpl">
-    <p>loading defined</p>
-    <!-- <ng-container *ngIf="isLoading; else moviesTmpl">
-        <p>loading</p>
-    </ng-container> -->
-  
+    <p>loading</p>
+
 </ng-container>
 
 <ng-template #moviesTmpl>
     <ng-container *ngIf="movies$ | async as movies">
         <p>movies defined</p>
-        <li *ngFor="let movie of movies; let i = index" (click)="goToMovie(movie, i)">
+        <li *ngFor="let movie of movies; let i = index" (click)="goToMovie(movie, movie.episode_id)">
             {{movie.title}}
         </li>
     </ng-container>

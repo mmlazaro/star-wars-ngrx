@@ -3,9 +3,9 @@ import { catchError, concatMap, exhaustMap, map, of, switchMap, tap, withLatestF
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { StarWarsClientService } from '../services/star-wars-client.service';
-import { cachedAction, loadCharacter, loadCharacterError, loadCharacterSuccess, loadMovieDetail, loadMovies, loadMoviesError, loadMoviesSuccess } from './star-wars.actions';
+import { cachedAction, loadCharacter, loadCharacterError, loadCharacterSuccess, loadMovieDetail, loadMovieDetailId, loadMovies, loadMoviesError, loadMoviesSuccess } from './star-wars.actions';
 import { StarWarsState } from './star-wars.reducer';
-import { selectCharacters, selectMovies } from './star-wars.selectors';
+import { selectCharacters, selectMovie, selectMovies } from './star-wars.selectors';
 import { API_URL } from '../services/api-url.token';
  
 
@@ -34,19 +34,20 @@ export const loadStarWarsMovies = createEffect(
   { functional: true }
 );
 
-
 export const loadCharacters = createEffect(
-    (actions$ = inject(Actions), starWarsService = inject(StarWarsClientService)) => {
+    (actions$ = inject(Actions), starWarsService = inject(StarWarsClientService), store = inject(Store<StarWarsState>), ) => {
         return actions$.pipe(
             ofType(
-                loadMovieDetail
+                loadMovieDetailId
             ),
-            switchMap((action) => action.selectedMovie.characters.map(char => loadCharacter({characterUrl: char}) ))  
+            switchMap(action => of(action).pipe(withLatestFrom(store.select(selectMovie)))),
+            concatMap(([, movie]) => {
+                if (!movie) return of(loadCharacterError());
+                return (movie.characters.map(char => loadCharacter({characterUrl: char})) )})  
             )
     },
     {functional: true}
 );
-
 
 export const loadCharacterEf = createEffect(
     (actions$ = inject(Actions), starWarsService = inject(StarWarsClientService), store = inject(Store<StarWarsState>), apiUrl = inject(API_URL)) => {

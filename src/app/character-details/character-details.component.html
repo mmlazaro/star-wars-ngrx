@@ -2,6 +2,8 @@
     <p>{{character.name}}</p>
     <p>{{character.height}}</p>
     <p>{{character.birth_year}}</p>
-    
+    <li *ngFor="let movie of (moviesForCharacter$ | async)">
+        <a (click)="goToMoviePage(movie.episode_id)">{{movie.title}}</a>
+    </li>
 
 </div>
