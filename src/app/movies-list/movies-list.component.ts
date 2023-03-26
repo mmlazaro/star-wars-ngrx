@@ -1,29 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
-import { Movie } from '../models/movie.interface';
-import { loadMovieDetail, loadMovies } from '../store/star-wars.actions';
+import { loadMovies } from '../store/star-wars.actions';
 import { StarWarsState } from '../store/star-wars.reducer';
 import { selectLoading, selectMovies } from '../store/star-wars.selectors';
 
 @Component({
-  selector: 'app-movies-list',
-  templateUrl: './movies-list.component.html',
-  styleUrls: ['./movies-list.component.scss']
+	selector: 'app-movies-list',
+	templateUrl: './movies-list.component.html',
+	styleUrls: ['./movies-list.component.scss'],
 })
 export class MoviesListComponent implements OnInit {
-  movies$ = this.store.select(selectMovies).pipe(tap(movies => console.log(movies)));
-  isLoading$ = this.store.select(selectLoading).pipe(tap(loading => console.log(loading)));
+	movies$ = this.store.select(selectMovies);
+	isLoading$ = this.store.select(selectLoading);
 
-  constructor(private store: Store<StarWarsState>, private router: Router) {}
+	constructor(private store: Store<StarWarsState>, private router: Router) {}
 
-  ngOnInit() {
-    this.store.dispatch(loadMovies());
-  }
+	ngOnInit() {
+		this.store.dispatch(loadMovies());
+	}
 
-  goToMovie(movie: Movie, index: number) {
-    this.router.navigate(['/movies', index ]);
-    console.log('navigate')
-  }
+	goToMovie(id: number) {
+		this.router.navigate(['/movies', id]);
+	}
 }

@@ -23,10 +23,7 @@ export const selectCharacters = createSelector(
 
 export const selectCharactersForMovie = createSelector(
     selectFeature, (state => {
-        const selectedMovie = state.selectedMovie;
-        //const charactersIds = state.characters.map(characterUrl => characterUrl.split(`${apiUrl}people`)[1].replaceAll('/', '');)
         return Object.entries(state.characters).reduce((acc, characterEntr) => {
-            //return selectedMovie?.characters.includes(character.url)
             const [id, character] = characterEntr;
             acc.push({
                 ...character, 
