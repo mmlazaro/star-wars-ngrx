@@ -11,7 +11,8 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { CharacterDetailsComponent } from './character-details/character-details.component';
 
 import * as starWarsEffects from './store/star-wars.effects';
-import { starWarsReducer } from './store/star-wars.reducer';
+import * as fromStartWarsReducer from './store/star-wars.reducer';
+import { API_URL } from './services/api-url.token';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,10 +24,14 @@ import { starWarsReducer } from './store/star-wars.reducer';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot(starWarsReducer),
+    StoreModule.forRoot({
+      starWars: fromStartWarsReducer.reducer
+    }),
     EffectsModule.forRoot(starWarsEffects)
   ],
-  providers: [],
+  providers: [{
+    provide: API_URL, useValue: 'https://swapi.dev/api/'
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

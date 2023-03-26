@@ -10,6 +10,13 @@ export const loadMovieDetail = createAction('Load movie detail', props<{selected
 // export const loadMovieDetailSuccess = createAction('Load movie detail success');
 // export const loadMovieDetailError = createAction('Load movie detail error');
 
-export const loadCharacter = createAction('Load movie detail');
-export const loadCharacterSuccess = createAction('Load character success', props<{character: Character & {id: number}}>());
+export const loadCharacters = createAction('Load characters');
+export const loadCharactersSuccess = createAction('Load characters success', props<{characters: Character[]}>());
+export const loadCharactersError = createAction('Load characters error');
+
+// todo select character
+export const loadCharacter = createAction('Load character', props<{characterUrl: string}>());
+export const loadCharacterSuccess = createAction('Load character success', props<{character: Character, id: string}>());
 export const loadCharacterError = createAction('Load character error');
+
+export const cachedAction = createAction('Cached action')

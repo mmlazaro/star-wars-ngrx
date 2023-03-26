@@ -1,9 +1,9 @@
-import { createReducer, on } from "@ngrx/store";
+import { Action, createReducer, on } from "@ngrx/store";
 import { Character } from "../models/character.interface";
 import { Movie } from "../models/movie.interface";
-import { loadCharacter, loadCharacterError, loadCharacterSuccess, loadMovieDetail, loadMovies, loadMoviesError, loadMoviesSuccess } from "./star-wars.actions";
+import { cachedAction, loadCharacters, loadCharactersError, loadCharactersSuccess, loadCharacterSuccess, loadMovieDetail, loadMovies, loadMoviesError, loadMoviesSuccess } from "./star-wars.actions";
 
-interface StarWarsState {
+export interface StarWarsState {
     movies: Movie[],
     characters: {
         [key: string]: Character,
@@ -23,14 +23,17 @@ export const initialState: StarWarsState = {
     isError: false,
 };
 
-export const starWarsReducer = createReducer(
+const starWarsReducer = createReducer(
     initialState,
     on(loadMovies, (state) => ({...state, isLoading: true, isError: false})),
-    on(loadMoviesSuccess, (state, {movies}) => ({
+    on(loadMoviesSuccess, (state, {movies}) => {
+        ;
+        return {
         ...state,
         isLoading: false,
         movies,
-    })),
+        }
+    }),
     on(loadMoviesError, (state) => ({
         ...state,
         isLoading: false,
@@ -40,19 +43,37 @@ export const starWarsReducer = createReducer(
         ...state,
         selectedMovie
     })),
-    on(loadCharacter, (state) => ({...state, isLoading: true, isError: false})),
-    on(loadCharacterSuccess, (state, { character}) => ({
+    on(loadCharacters, (state) => ({...state, isLoading: true, isError: false})),
+    // on(loadCharactersSuccess, (state, { characters}) => ({
+    //     ...state,
+    //     isLoading: false,
+    //     characters: characters.reduce((acc, curr) => {
+    //         acc[curr.name] = curr;
+    //         return acc;
+    //     }, {} as Record<string, Character>)
+    // })),
+    on(loadCharacterSuccess, (state, {character, id}) => {
+        debugger
+        return {
         ...state,
         isLoading: false,
-        selectedCharacter: character,
         characters: {
-            [character.id]: character
+            ...state.characters, 
+            [id]: character
         }
-    })),
-    on(loadCharacterError, (state) => ({
+    }}),
+    on(loadCharactersError, (state) => ({
         ...state,
         isLoading: false,
         isError: true
     })),
+    on(cachedAction, (state) => ({
+        ...state, 
+        isLoading: false
+    }))
 
 );
+
+export function reducer(state: StarWarsState | undefined, action: Action) {
+    return starWarsReducer(state, action);
+  }
